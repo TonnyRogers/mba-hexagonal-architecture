@@ -1,3 +1,13 @@
+type Mutation {
+  createCustomer(input: CustomerInput): Customer!
+  createPartner(input: PartnerInput): Partner!
+}
+
+type Query {
+  customerOfId(id: ID!): Customer
+  partnerOfId(id: ID!): Partner
+}
+
 type Customer {
   id: ID!
   name: String
@@ -11,10 +21,15 @@ input CustomerInput {
   cpf: String
 }
 
-type Mutation {
-  createCustomer(input: CustomerInput): Customer!
+type Partner {
+  id: ID!
+  name: String
+  email: String
+  cnpj: String
 }
 
-type Query {
-  customerOfId(id: ID!): Customer
+input PartnerInput {
+  name: String
+  email: String
+  cnpj: String
 }
