@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.application.exceptions.ValidationException;
+import com.example.demo.application.usecases.CreateCustomerUseCase;
 import com.example.demo.dtos.CustomerDTO;
-import com.example.demo.models.Customer;
 import com.example.demo.services.CustomerService;
 
 @RestController
@@ -24,21 +25,14 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CustomerDTO dto) {
-        if (customerService.findByCpf(dto.getCpf()).isPresent()) {
-            return ResponseEntity.unprocessableEntity().body("Customer already exists");
+        try {
+            final var useCase = new CreateCustomerUseCase(customerService);
+            final var output = useCase.execute(new CreateCustomerUseCase.Input(dto.getCpf(), dto.getEmail(), dto.getName()));
+
+            return ResponseEntity.created(URI.create("/customers/" + output.id())).body(output);
+        } catch (ValidationException ex) {
+            return ResponseEntity.unprocessableEntity().body(ex.getMessage());
         }
-        if (customerService.findByEmail(dto.getEmail()).isPresent()) {
-            return ResponseEntity.unprocessableEntity().body("Customer already exists");
-        }
-
-        var customer = new Customer();
-        customer.setName(dto.getName());
-        customer.setCpf(dto.getCpf());
-        customer.setEmail(dto.getEmail());
-
-        customer = customerService.save(customer);
-
-        return ResponseEntity.created(URI.create("/customers/" + customer.getId())).body(customer);
     }
 
     @GetMapping("/{id}")
