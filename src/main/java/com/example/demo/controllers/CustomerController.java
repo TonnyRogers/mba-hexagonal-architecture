@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.usecases.CreateCustomerUseCase;
+import com.example.demo.application.usecases.GetCustomerByIdUseCase;
 import com.example.demo.dtos.CustomerDTO;
 import com.example.demo.services.CustomerService;
 
@@ -37,11 +38,9 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        var customer = customerService.findById(id);
-        if (customer.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(customer.get());
+        final var useCase = new GetCustomerByIdUseCase(customerService);
+        return useCase.execute(new GetCustomerByIdUseCase.Input(id))
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 }

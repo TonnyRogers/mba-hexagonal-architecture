@@ -8,6 +8,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import com.example.demo.application.usecases.CreateCustomerUseCase;
+import com.example.demo.application.usecases.GetCustomerByIdUseCase;
 import com.example.demo.dtos.CustomerDTO;
 import com.example.demo.services.CustomerService;
 
@@ -29,9 +30,10 @@ public class CustumerResolver {
     }
 
     @QueryMapping
-    public CustomerDTO customerOfId(@Argument Long id) {
-        return customerService.findById(id)
-                .map(CustomerDTO::new)
+    public GetCustomerByIdUseCase.Output customerOfId(@Argument Long id) {
+
+        final var useCase = new GetCustomerByIdUseCase(customerService);
+        return useCase.execute(new GetCustomerByIdUseCase.Input(id))
                 .orElse(null);
     }
 }
