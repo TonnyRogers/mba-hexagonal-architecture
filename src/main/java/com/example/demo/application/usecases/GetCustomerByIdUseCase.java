@@ -1,5 +1,6 @@
 package com.example.demo.application.usecases;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import com.example.demo.application.UseCase;
@@ -9,8 +10,8 @@ public class GetCustomerByIdUseCase extends UseCase<GetCustomerByIdUseCase.Input
 
     private final CustomerService customerService;
 
-    public GetCustomerByIdUseCase(CustomerService customerService1) {
-        this.customerService = customerService1;
+    public GetCustomerByIdUseCase(final CustomerService customerService1) {
+        this.customerService = Objects.requireNonNull(customerService1);
     }
 
     @Override

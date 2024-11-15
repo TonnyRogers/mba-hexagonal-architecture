@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.net.URI;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.application.exceptions.ValidationException;
+import com.example.demo.application.usecases.CreateEventUseCase;
+import com.example.demo.application.usecases.SubscribeCustomerToEventUseCase;
 import com.example.demo.dtos.EventDTO;
 import com.example.demo.dtos.SubscribeDTO;
-import com.example.demo.models.Event;
-import com.example.demo.models.Ticket;
-import com.example.demo.models.TicketStatus;
 import com.example.demo.services.CustomerService;
 import com.example.demo.services.EventService;
 import com.example.demo.services.PartnerService;
@@ -39,57 +38,27 @@ public class EventController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Event create(@RequestBody EventDTO dto) {
-        var event = new Event();
-        event.setDate(LocalDate.parse(dto.getDate(), DateTimeFormatter.ISO_DATE));
-        event.setName(dto.getName());
-        event.setTotalSpots(dto.getTotalSpots());
-
-        var partner = partnerService.findById(dto.getPartner().getId());
-        if (partner.isEmpty()) {
-            throw new RuntimeException("Partner not found");
+    public ResponseEntity<?> create(@RequestBody EventDTO dto) {
+        try {
+            final var partnerId = Objects.requireNonNull(dto.getPartner().getId(), "Partnet is required");
+            final var useCase = new CreateEventUseCase(partnerService, eventService);
+            final var output = useCase.execute(new CreateEventUseCase.Input(dto.getDate(), dto.getName(), dto.getTotalSpots(), partnerId));
+            return ResponseEntity.created(URI.create("/events/" + output.id())).body(output);
+        } catch (ValidationException ex) {
+            return ResponseEntity.unprocessableEntity().body(ex.getMessage());
         }
-        event.setPartner(partner.get());
 
-        return eventService.save(event);
     }
 
     @Transactional
     @PostMapping(value = "/{id}/subscribe")
     public ResponseEntity<?> subscribe(@PathVariable Long id, @RequestBody SubscribeDTO dto) {
-
-        var maybeCustomer = customerService.findById(dto.getCustomerId());
-        if (maybeCustomer.isEmpty()) {
-            return ResponseEntity.unprocessableEntity().body("Customer not found");
+        try {
+            final var useCase = new SubscribeCustomerToEventUseCase(customerService, eventService);
+            final var output = useCase.execute(new SubscribeCustomerToEventUseCase.Input(id, dto.getCustomerId()));
+            return ResponseEntity.ok(output);
+        } catch (ValidationException ex) {
+            return ResponseEntity.unprocessableEntity().body(ex.getMessage());
         }
-
-        var maybeEvent = eventService.findById(id);
-        if (maybeEvent.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        var maybeTicket = eventService.findTicketByEventIdAndCustomerId(id, dto.getCustomerId());
-        if (maybeTicket.isPresent()) {
-            return ResponseEntity.unprocessableEntity().body("Email already registered");
-        }
-
-        var customer = maybeCustomer.get();
-        var event = maybeEvent.get();
-
-        if (event.getTotalSpots() < event.getTickets().size() + 1) {
-            throw new RuntimeException("Event sold out");
-        }
-
-        var ticket = new Ticket();
-        ticket.setEvent(event);
-        ticket.setCustomer(customer);
-        ticket.setReservedAt(Instant.now());
-        ticket.setStatus(TicketStatus.PENDING);
-
-        event.getTickets().add(ticket);
-
-        eventService.save(event);
-
-        return ResponseEntity.ok(new EventDTO(event));
     }
 }

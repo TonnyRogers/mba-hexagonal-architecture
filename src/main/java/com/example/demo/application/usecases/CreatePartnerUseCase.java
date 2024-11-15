@@ -11,7 +11,7 @@ public class CreatePartnerUseCase extends UseCase<CreatePartnerUseCase.Input, Cr
 
     private final PartnerService partnerService;
 
-    public CreatePartnerUseCase(PartnerService partnerService) {
+    public CreatePartnerUseCase(final PartnerService partnerService) {
         this.partnerService = Objects.requireNonNull(partnerService);
     }
 

@@ -1,5 +1,7 @@
 package com.example.demo.application.usecases;
 
+import java.util.Objects;
+
 import com.example.demo.application.UseCase;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.models.Customer;
@@ -9,8 +11,8 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, 
 
     private final CustomerService customerService;
 
-    public CreateCustomerUseCase(CustomerService customerService1) {
-        this.customerService = customerService1;
+    public CreateCustomerUseCase(final CustomerService customerService1) {
+        this.customerService = Objects.requireNonNull(customerService1);
     }
 
     @Override
