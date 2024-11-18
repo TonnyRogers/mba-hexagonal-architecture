@@ -33,7 +33,7 @@ public class SubscribeCustomerToEventUseCase extends UseCase<SubscribeCustomerTo
                     throw new ValidationException("Email already registered");
                 });
 
-        if (event.getTotalSpots() > event.getTickets().size() + 1) {
+        if (event.getTotalSpots() < event.getTickets().size() + 1) {
             throw new ValidationException("Event sold out");
         }
 
