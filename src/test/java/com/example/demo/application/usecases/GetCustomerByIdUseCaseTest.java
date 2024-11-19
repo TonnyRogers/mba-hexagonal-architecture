@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.example.demo.models.Customer;
-import com.example.demo.services.CustomerService;
+import com.example.demo.infrastructure.models.Customer;
+import com.example.demo.infrastructure.services.CustomerService;
 
 public class GetCustomerByIdUseCaseTest {
 

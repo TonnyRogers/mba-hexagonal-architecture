@@ -4,8 +4,8 @@ import java.util.Objects;
 
 import com.example.demo.application.UseCase;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.models.Customer;
-import com.example.demo.services.CustomerService;
+import com.example.demo.infrastructure.models.Customer;
+import com.example.demo.infrastructure.services.CustomerService;
 
 public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, CreateCustomerUseCase.Output> {
 

@@ -6,9 +6,9 @@ import java.util.Objects;
 
 import com.example.demo.application.UseCase;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.models.Event;
-import com.example.demo.services.EventService;
-import com.example.demo.services.PartnerService;
+import com.example.demo.infrastructure.models.Event;
+import com.example.demo.infrastructure.services.EventService;
+import com.example.demo.infrastructure.services.PartnerService;
 
 public class CreateEventUseCase extends UseCase<CreateEventUseCase.Input, CreateEventUseCase.Output> {
 

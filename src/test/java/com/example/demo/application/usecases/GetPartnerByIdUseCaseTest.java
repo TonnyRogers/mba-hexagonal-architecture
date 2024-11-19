@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.example.demo.models.Partner;
-import com.example.demo.services.PartnerService;
+import com.example.demo.infrastructure.models.Partner;
+import com.example.demo.infrastructure.services.PartnerService;
 
 public class GetPartnerByIdUseCaseTest {
 

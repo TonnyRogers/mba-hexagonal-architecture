@@ -5,10 +5,10 @@ import java.util.Objects;
 
 import com.example.demo.application.UseCase;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.models.Ticket;
-import com.example.demo.models.TicketStatus;
-import com.example.demo.services.CustomerService;
-import com.example.demo.services.EventService;
+import com.example.demo.infrastructure.models.Ticket;
+import com.example.demo.infrastructure.models.TicketStatus;
+import com.example.demo.infrastructure.services.CustomerService;
+import com.example.demo.infrastructure.services.EventService;
 
 public class SubscribeCustomerToEventUseCase extends UseCase<SubscribeCustomerToEventUseCase.Input, SubscribeCustomerToEventUseCase.Output> {
 

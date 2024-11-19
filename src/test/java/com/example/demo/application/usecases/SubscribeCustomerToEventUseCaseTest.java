@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.models.Customer;
-import com.example.demo.models.Event;
-import com.example.demo.models.Ticket;
-import com.example.demo.models.TicketStatus;
-import com.example.demo.services.CustomerService;
-import com.example.demo.services.EventService;
+import com.example.demo.infrastructure.models.Customer;
+import com.example.demo.infrastructure.models.Event;
+import com.example.demo.infrastructure.models.Ticket;
+import com.example.demo.infrastructure.models.TicketStatus;
+import com.example.demo.infrastructure.services.CustomerService;
+import com.example.demo.infrastructure.services.EventService;
 
 import io.hypersistence.tsid.TSID;
 
