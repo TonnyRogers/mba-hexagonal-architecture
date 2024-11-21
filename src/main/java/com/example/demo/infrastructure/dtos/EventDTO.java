@@ -10,7 +10,7 @@ public class EventDTO {
     private String name;
     private String date;
     private int totalSpots;
-    private PartnerDTO partner;
+    private NewPartnerDTO partner;
 
     public EventDTO() {
     }
@@ -20,7 +20,7 @@ public class EventDTO {
         this.name = event.getName();
         this.date = event.getDate().format(DateTimeFormatter.ISO_DATE);
         this.totalSpots = event.getTotalSpots();
-        this.partner = new PartnerDTO(event.getPartner());
+        this.partner = new NewPartnerDTO(event.getPartner().getCnpj(), event.getPartner().getEmail(), event.getPartner().getName());
     }
 
     public Long getId() {
@@ -55,11 +55,11 @@ public class EventDTO {
         this.totalSpots = totalSpots;
     }
 
-    public PartnerDTO getPartner() {
+    public NewPartnerDTO getPartner() {
         return partner;
     }
 
-    public void setPartner(PartnerDTO partner) {
+    public void setPartner(NewPartnerDTO partner) {
         this.partner = partner;
     }
 

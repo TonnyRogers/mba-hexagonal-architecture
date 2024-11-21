@@ -1,8 +1,8 @@
-package com.example.demo.infrastructure.controllers;
+package com.example.demo.infrastructure.rest;
 
 import java.net.URI;
+import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,21 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.usecases.CreatePartnerUseCase;
 import com.example.demo.application.usecases.GetPartnerByIdUseCase;
-import com.example.demo.infrastructure.dtos.PartnerDTO;
-import com.example.demo.infrastructure.services.PartnerService;
+import com.example.demo.infrastructure.dtos.NewPartnerDTO;
 
 @RestController
 @RequestMapping(value = "partners")
 public class PartnerController {
 
-    @Autowired
-    private PartnerService partnerService;
+    private final CreatePartnerUseCase createPartnerUseCase;
+    private final GetPartnerByIdUseCase getPartnerByIdUseCase;
+
+    public PartnerController(
+            final CreatePartnerUseCase createPartnerUseCase,
+            final GetPartnerByIdUseCase getPartnerByIdUseCase
+    ) {
+        this.createPartnerUseCase = Objects.requireNonNull(createPartnerUseCase);
+        this.getPartnerByIdUseCase = Objects.requireNonNull(getPartnerByIdUseCase);
+    }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PartnerDTO dto) {
+    public ResponseEntity<?> create(@RequestBody NewPartnerDTO dto) {
         try {
-            final var useCase = new CreatePartnerUseCase(partnerService);
-            final var output = useCase.execute(new CreatePartnerUseCase.Input(dto.getCnpj(), dto.getEmail(), dto.getName()));
+            final var output = createPartnerUseCase.execute(new CreatePartnerUseCase.Input(dto.cnpj(), dto.email(), dto.name()));
 
             return ResponseEntity.created(URI.create("/partners/" + output.id())).body(output);
         } catch (ValidationException ex) {
@@ -38,8 +44,7 @@ public class PartnerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        final var useCase = new GetPartnerByIdUseCase(partnerService);
-        return useCase.execute(new GetPartnerByIdUseCase.Input(id))
+        return getPartnerByIdUseCase.execute(new GetPartnerByIdUseCase.Input(id))
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
     }

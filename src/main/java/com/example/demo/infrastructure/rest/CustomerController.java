@@ -1,8 +1,8 @@
-package com.example.demo.infrastructure.controllers;
+package com.example.demo.infrastructure.rest;
 
 import java.net.URI;
+import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,21 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.usecases.CreateCustomerUseCase;
 import com.example.demo.application.usecases.GetCustomerByIdUseCase;
-import com.example.demo.infrastructure.dtos.CustomerDTO;
-import com.example.demo.infrastructure.services.CustomerService;
+import com.example.demo.infrastructure.dtos.NewCustomerDTO;
 
 @RestController
 @RequestMapping(value = "customers")
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+    private final CreateCustomerUseCase createCustomerUseCase;
+    private final GetCustomerByIdUseCase getCustomerByIdUseCase;
+
+    public CustomerController(
+            final CreateCustomerUseCase createCustomerUseCase,
+            final GetCustomerByIdUseCase getCustomerByIdUseCase
+    ) {
+        this.createCustomerUseCase = Objects.requireNonNull(createCustomerUseCase);
+        this.getCustomerByIdUseCase = Objects.requireNonNull(getCustomerByIdUseCase);
+    }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CustomerDTO dto) {
+    public ResponseEntity<?> create(@RequestBody NewCustomerDTO dto) {
         try {
-            final var useCase = new CreateCustomerUseCase(customerService);
-            final var output = useCase.execute(new CreateCustomerUseCase.Input(dto.getCpf(), dto.getEmail(), dto.getName()));
+            final var output = createCustomerUseCase.execute(new CreateCustomerUseCase.Input(dto.cpf(), dto.email(), dto.name()));
 
             return ResponseEntity.created(URI.create("/customers/" + output.id())).body(output);
         } catch (ValidationException ex) {
@@ -38,8 +44,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        final var useCase = new GetCustomerByIdUseCase(customerService);
-        return useCase.execute(new GetCustomerByIdUseCase.Input(id))
+        return getCustomerByIdUseCase.execute(new GetCustomerByIdUseCase.Input(id))
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
     }

@@ -9,31 +9,32 @@ import org.springframework.stereotype.Controller;
 
 import com.example.demo.application.usecases.CreatePartnerUseCase;
 import com.example.demo.application.usecases.GetPartnerByIdUseCase;
-import com.example.demo.infrastructure.dtos.PartnerDTO;
-import com.example.demo.infrastructure.services.PartnerService;
+import com.example.demo.infrastructure.dtos.NewPartnerDTO;
 
 @Controller
 public class PartnerResolver {
 
-    private final PartnerService partnerService;
+    private final CreatePartnerUseCase createPartnerUseCase;
+    private final GetPartnerByIdUseCase getPartnerByIdUseCase;
 
-    public PartnerResolver(final PartnerService partnerService) {
-        this.partnerService = Objects.requireNonNull(partnerService);
+    public PartnerResolver(
+            final CreatePartnerUseCase createPartnerUseCase,
+            final GetPartnerByIdUseCase getPartnerByIdUseCase
+    ) {
+        this.createPartnerUseCase = Objects.requireNonNull(createPartnerUseCase);
+        this.getPartnerByIdUseCase = Objects.requireNonNull(getPartnerByIdUseCase);
     }
 
     @MutationMapping
-    public CreatePartnerUseCase.Output createPartner(@Argument PartnerDTO input) {
-        final var useCase = new CreatePartnerUseCase(partnerService);
-        final var output = useCase.execute(new CreatePartnerUseCase.Input(input.getCnpj(), input.getEmail(), input.getName()));
+    public CreatePartnerUseCase.Output createPartner(@Argument NewPartnerDTO input) {
+        final var output = createPartnerUseCase.execute(new CreatePartnerUseCase.Input(input.cnpj(), input.email(), input.name()));
 
         return output;
     }
 
     @QueryMapping
     public GetPartnerByIdUseCase.Output partnerOfId(@Argument Long id) {
-
-        final var useCase = new GetPartnerByIdUseCase(partnerService);
-        return useCase.execute(new GetPartnerByIdUseCase.Input(id))
+        return getPartnerByIdUseCase.execute(new GetPartnerByIdUseCase.Input(id))
                 .orElse(null);
     }
 }
