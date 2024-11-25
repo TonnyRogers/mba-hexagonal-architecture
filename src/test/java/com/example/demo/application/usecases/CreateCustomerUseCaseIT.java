@@ -28,7 +28,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     @DisplayName("should create customer")
     public void testCreateCustomer() {
         // given
-        final var CPF = "265359485551";
+        final var CPF = "265.359.4855-51";
         final var email = "teste@teste123.com";
         final var name = "Tony Amaral";
 
@@ -48,7 +48,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     @DisplayName("should't create a customer with duplicated CPF")
     public void testCreateWithDuplicatedCPFShouldFail() {
         // given
-        final var CPF = "44894589464858";
+        final var CPF = "265.359.4855-51";
         final var email = "teste@test.com";
         final var name = "Tony Amaral";
         final var errorMessage = "Customer already exists";
@@ -68,12 +68,12 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     @DisplayName("should't create a customer with duplicated email")
     public void testCreateWithDuplicatedEmailShouldFail() {
         // given
-        final var CPF = "44894589464858";
+        final var CPF = "265.359.4855-51";
         final var email = "teste@test.com";
         final var name = "Tony Amaral";
         final var errorMessage = "Customer already exists";
 
-        createCustomer("485466464548", email, name);
+        createCustomer("485.466.4645-48", email, name);
         final var createInput = new CreateCustomerUseCase.Input(CPF, email, name);
 
         // when

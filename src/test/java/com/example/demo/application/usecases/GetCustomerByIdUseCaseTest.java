@@ -1,44 +1,37 @@
 package com.example.demo.application.usecases;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import com.example.demo.infrastructure.models.Customer;
-import com.example.demo.infrastructure.services.CustomerService;
+import com.example.demo.application.InMemoryCustomerRepository;
+import com.example.demo.application.entities.Customer;
 
 public class GetCustomerByIdUseCaseTest {
 
     @Test
     @DisplayName("should get customer by id")
     public void testGetById() {
-
-        final var id = UUID.randomUUID().getMostSignificantBits();
-        final var CPF = "26535948555";
+        final var CPF = "265.359.485-55";
         final var email = "teste@test.com";
         final var name = "Tony Amaral";
 
-        final var customerService = Mockito.mock(CustomerService.class);
+        final var customerRepository = new InMemoryCustomerRepository();
 
-        final var createdCustomer = new Customer();
-        createdCustomer.setId(id);
-        createdCustomer.setCpf(CPF);
-        createdCustomer.setName(name);
-        createdCustomer.setEmail(email);
+        final var createdCustomer = Customer.newCustomer(name, CPF, email);
 
-        final var input = new GetCustomerByIdUseCase.Input(id);
+        final var expectedId = createdCustomer.getCustomerId().value().toString();
 
-        Mockito.when(customerService.findById(id)).thenReturn(Optional.of(createdCustomer));
+        final var input = new GetCustomerByIdUseCase.Input(expectedId);
+        customerRepository.create(createdCustomer);
 
-        final var useCase = new GetCustomerByIdUseCase(customerService);
+        final var useCase = new GetCustomerByIdUseCase(customerRepository);
         final var output = useCase.execute(input).get();
         // this get method above is only allowed to use in test scenario
 
-        Assertions.assertEquals(id, output.id());
+        Assertions.assertEquals(expectedId, output.id());
         Assertions.assertEquals(CPF, output.cpf());
         Assertions.assertEquals(email, output.email());
         Assertions.assertEquals(name, output.name());
@@ -48,14 +41,12 @@ public class GetCustomerByIdUseCaseTest {
     @DisplayName("should't get customer by id")
     public void testGetByIdFail() {
 
-        final var id = UUID.randomUUID().getMostSignificantBits();
+        final var id = UUID.randomUUID().toString();
 
-        final var customerService = Mockito.mock(CustomerService.class);
+        final var customerRepository = new InMemoryCustomerRepository();
         final var input = new GetCustomerByIdUseCase.Input(id);
 
-        Mockito.when(customerService.findById(id)).thenReturn(Optional.empty());
-
-        final var useCase = new GetCustomerByIdUseCase(customerService);
+        final var useCase = new GetCustomerByIdUseCase(customerRepository);
         final var output = useCase.execute(input);
 
         Assertions.assertTrue(output.isEmpty());

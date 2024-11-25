@@ -19,22 +19,25 @@ import com.example.demo.infrastructure.services.PartnerService;
 public class UseCaseConfig {
 
     private final CustomerService customerService;
+    // private final CustomerRepository customerRepository;
     private final EventService eventService;
     private final PartnerService partnerService;
 
     public UseCaseConfig(
             final CustomerService customerService,
+            // final CustomerRepository customerRepository,
             final EventService eventService,
             final PartnerService partnerService
     ) {
         this.customerService = Objects.requireNonNull(customerService);
+        // this.customerRepository = Objects.requireNonNull(customerRepository);
         this.eventService = Objects.requireNonNull(eventService);
         this.partnerService = Objects.requireNonNull(partnerService);
     }
 
     @Bean
     public CreateCustomerUseCase createCustomerUseCase() {
-        return new CreateCustomerUseCase(customerService);
+        return new CreateCustomerUseCase(null);
     }
 
     @Bean
@@ -49,7 +52,7 @@ public class UseCaseConfig {
 
     @Bean
     public GetCustomerByIdUseCase getCustomerByIdUseCase() {
-        return new GetCustomerByIdUseCase(customerService);
+        return new GetCustomerByIdUseCase(null);
     }
 
     @Bean

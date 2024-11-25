@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.application.usecases.CreateCustomerUseCase;
+import com.example.demo.application.usecases.CreateEventUseCase;
 import com.example.demo.infrastructure.dtos.NewEventDTO;
 import com.example.demo.infrastructure.dtos.SubscribeDTO;
 import com.example.demo.infrastructure.models.Customer;
@@ -98,7 +98,7 @@ class EventControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andReturn().getResponse().getContentAsByteArray();
 
-        var eventId = mapper.readValue(createResult, CreateCustomerUseCase.Output.class).id();
+        var eventId = mapper.readValue(createResult, CreateEventUseCase.Output.class).id();
 
         var sub = new SubscribeDTO(johnDoe.getId(), null);
 
