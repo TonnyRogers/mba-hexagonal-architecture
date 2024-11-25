@@ -3,38 +3,40 @@ package com.example.demo.application.usecases;
 import java.util.Objects;
 
 import com.example.demo.application.UseCase;
+import com.example.demo.application.entities.Partner;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.Partner;
-import com.example.demo.infrastructure.services.PartnerService;
+import com.example.demo.application.repositories.PartnerRepository;
 
 public class CreatePartnerUseCase extends UseCase<CreatePartnerUseCase.Input, CreatePartnerUseCase.Output> {
 
-    private final PartnerService partnerService;
+    private final PartnerRepository partnerRepository;
 
-    public CreatePartnerUseCase(final PartnerService partnerService) {
-        this.partnerService = Objects.requireNonNull(partnerService);
+    public CreatePartnerUseCase(final PartnerRepository partnerRepository) {
+        this.partnerRepository = Objects.requireNonNull(partnerRepository);
     }
 
     @Override
     public Output execute(final Input input) {
-        if (partnerService.findByCnpj(input.cpnj).isPresent() || partnerService.findByEmail(input.email).isPresent()) {
+        if (partnerRepository.partnerOfCNPJ(input.cpnj).isPresent() || partnerRepository.partnerOfEmail(input.email).isPresent()) {
             throw new ValidationException("Partner already exists");
         }
 
-        var partner = new Partner();
-        partner.setCnpj(input.cpnj);
-        partner.setEmail(input.email);
-        partner.setName(input.name);
-        partner = partnerService.save(partner);
+        var partner = Partner.newPartner(input.name, input.cpnj, input.email);
+        partner = partnerRepository.create(partner);
 
-        return new Output(partner.getId(), partner.getCnpj(), partner.getEmail(), partner.getName());
+        return new Output(
+                partner.getPartnerId().value().toString(),
+                partner.getCnpj().value(),
+                partner.getEmail().value(),
+                partner.getName().value()
+        );
     }
 
     public record Input(String cpnj, String email, String name) {
 
     }
 
-    public record Output(Long id, String cnpj, String email, String name) {
+    public record Output(String id, String cnpj, String email, String name) {
 
     }
 }

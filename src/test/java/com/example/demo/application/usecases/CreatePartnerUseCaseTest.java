@@ -1,16 +1,12 @@
 package com.example.demo.application.usecases;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
+import com.example.demo.application.InMemoryPartnerRepository;
+import com.example.demo.application.entities.Partner;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.Partner;
-import com.example.demo.infrastructure.services.PartnerService;
 
 public class CreatePartnerUseCaseTest {
 
@@ -18,23 +14,15 @@ public class CreatePartnerUseCaseTest {
     @DisplayName("should create a partner")
     public void testCreatePartner() {
         // given
-        final var CNPJ = "26535948555";
+        final var CNPJ = "26.535.948/0001-55";
         final var email = "teste@test.com";
         final var name = "Tony Amaral";
 
         final var createInput = new CreatePartnerUseCase.Input(CNPJ, email, name);
-        final var partnerService = Mockito.mock(PartnerService.class);
+        final var partnerRepository = new InMemoryPartnerRepository();
 
         // when
-        Mockito.when(partnerService.findByCnpj(CNPJ)).thenReturn(Optional.empty());
-        Mockito.when(partnerService.findByEmail(email)).thenReturn(Optional.empty());
-        Mockito.when(partnerService.save(Mockito.any())).thenAnswer(a -> {
-            var partner = a.getArgument(0, Partner.class);
-            partner.setId(UUID.randomUUID().getMostSignificantBits());
-            return partner;
-        });
-
-        final var useCase = new CreatePartnerUseCase(partnerService);
+        final var useCase = new CreatePartnerUseCase(partnerRepository);
         final var output = useCase.execute(createInput);
 
         //then
@@ -48,24 +36,18 @@ public class CreatePartnerUseCaseTest {
     @DisplayName("should't create a partner with duplicated CNPJ")
     public void testCreateWithDuplicatedCNPJShouldFail() {
         // given
-        final var CNPJ = "26535948555";
+        final var CNPJ = "26.535.948/0001-55";
         final var email = "teste@test.com";
         final var name = "Tony Amaral";
         final var errorMessage = "Partner already exists";
 
         final var createInput = new CreatePartnerUseCase.Input(CNPJ, email, name);
-        final var partnerService = Mockito.mock(PartnerService.class);
-
-        final var createdPartner = new Partner();
-        createdPartner.setCnpj(CNPJ);
-        createdPartner.setName(name);
-        createdPartner.setEmail(email);
-        createdPartner.setId(UUID.randomUUID().getMostSignificantBits());
+        final var partnerRepository = new InMemoryPartnerRepository();
+        final var createdPartner = Partner.newPartner(name, CNPJ, "teste3@test.com");
+        partnerRepository.create(createdPartner);
 
         // when
-        Mockito.when(partnerService.findByCnpj(CNPJ)).thenReturn(Optional.of(createdPartner));
-
-        final var useCase = new CreatePartnerUseCase(partnerService);
+        final var useCase = new CreatePartnerUseCase(partnerRepository);
         final var actualException = Assertions
                 .assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
@@ -77,24 +59,19 @@ public class CreatePartnerUseCaseTest {
     @DisplayName("should't create a partner with duplicated email")
     public void testCreateWithDuplicatedEmailShouldFail() {
         // given
-        final var CNPJ = "26535948555";
+        final var CNPJ = "26.535.948/0001-55";
         final var email = "teste@test.com";
         final var name = "Tony Amaral";
         final var errorMessage = "Partner already exists";
 
         final var createInput = new CreatePartnerUseCase.Input(CNPJ, email, name);
-        final var partnerService = Mockito.mock(PartnerService.class);
+        final var partnerRepository = new InMemoryPartnerRepository();
 
-        final var createdPartner = new Partner();
-        createdPartner.setCnpj(CNPJ);
-        createdPartner.setName(name);
-        createdPartner.setEmail(email);
-        createdPartner.setId(UUID.randomUUID().getMostSignificantBits());
+        final var createdPartner = Partner.newPartner(name, "22.152.684/0001-56", email);
+        partnerRepository.create(createdPartner);
 
         // when
-        Mockito.when(partnerService.findByEmail(email)).thenReturn(Optional.of(createdPartner));
-
-        final var useCase = new CreatePartnerUseCase(partnerService);
+        final var useCase = new CreatePartnerUseCase(partnerRepository);
         final var actualException = Assertions
                 .assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
