@@ -1,19 +1,14 @@
 package com.example.demo.application.usecases;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
+import com.example.demo.application.InMemoryEventRepository;
+import com.example.demo.application.InMemoryPartnerRepository;
+import com.example.demo.application.entities.Partner;
+import com.example.demo.application.entities.PartnerId;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.Event;
-import com.example.demo.infrastructure.models.Partner;
-import com.example.demo.infrastructure.services.EventService;
-import com.example.demo.infrastructure.services.PartnerService;
-
-import io.hypersistence.tsid.TSID;
 
 public class CreateEventUseCaseTest {
 
@@ -23,22 +18,16 @@ public class CreateEventUseCaseTest {
         final var date = "2024-01-01";
         final var name = "Tony Amaral";
         final var totalSpots = 10;
-        final var partnerId = TSID.fast().toLong();
+        final var partner = Partner.newPartner("Tony Comp", "32.125.214/0001-55", "tony@teste3.com");
+        final var partnerId = partner.getPartnerId().value();
         final var createInput = new CreateEventUseCase.Input(date, name, totalSpots, partnerId);
 
-        final var eventService = Mockito.mock(EventService.class);
-        final var partnerService = Mockito.mock(PartnerService.class);
+        final var eventRepository = new InMemoryEventRepository();
+        final var partnerRepository = new InMemoryPartnerRepository();
 
-        Mockito.when(partnerService.findById(Mockito.eq(partnerId)))
-                .thenReturn(Optional.of(new Partner()));
+        partnerRepository.create(partner);
 
-        Mockito.when(eventService.save(Mockito.any())).thenAnswer(answer -> {
-            final var event = answer.getArgument(0, Event.class);
-            event.setId(TSID.fast().toLong());
-            return event;
-        });
-
-        final var useCase = new CreateEventUseCase(partnerService, eventService);
+        final var useCase = new CreateEventUseCase(partnerRepository, eventRepository);
         final var output = useCase.execute(createInput);
 
         Assertions.assertNotNull(output.id());
@@ -54,17 +43,14 @@ public class CreateEventUseCaseTest {
         final var date = "2024-01-01";
         final var name = "Tony Amaral";
         final var totalSpots = 10;
-        final var partnerId = TSID.fast().toLong();
+        final var partnerId = PartnerId.unique().value();
         final var createInput = new CreateEventUseCase.Input(date, name, totalSpots, partnerId);
         final var error = "Partner not found";
 
-        final var eventService = Mockito.mock(EventService.class);
-        final var partnerService = Mockito.mock(PartnerService.class);
+        final var eventRepository = new InMemoryEventRepository();
+        final var partnerRepository = new InMemoryPartnerRepository();
 
-        Mockito.when(partnerService.findById(Mockito.eq(partnerId)))
-                .thenReturn(Optional.empty());
-
-        final var useCase = new CreateEventUseCase(partnerService, eventService);
+        final var useCase = new CreateEventUseCase(partnerRepository, eventRepository);
         final var exception = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         Assertions.assertEquals(error, exception.getMessage());

@@ -42,7 +42,7 @@ public class UseCaseConfig {
 
     @Bean
     public CreateEventUseCase createEventUseCase() {
-        return new CreateEventUseCase(partnerService, eventService);
+        return new CreateEventUseCase(null, null);
     }
 
     @Bean

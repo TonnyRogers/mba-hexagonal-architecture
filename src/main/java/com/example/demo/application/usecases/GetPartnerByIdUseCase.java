@@ -19,7 +19,7 @@ public class GetPartnerByIdUseCase extends UseCase<GetPartnerByIdUseCase.Input, 
     public Optional<Output> execute(Input input) {
         return partnerRepository.partnerOfId(PartnerId.with(input.id))
                 .map(p -> new Output(
-                p.getPartnerId().value().toString(),
+                p.getPartnerId().value(),
                 p.getCnpj().value(),
                 p.getEmail().value(),
                 p.getName().value()

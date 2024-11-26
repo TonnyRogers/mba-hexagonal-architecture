@@ -24,9 +24,9 @@ public class GetPartnerByIdUseCaseTest {
 
         final var createdPartner = Partner.newPartner(name, CNPJ, email);
         partnerRepository.create(createdPartner);
-        final var partnerId = createdPartner.getPartnerId().value().toString();
+        final var partnerId = createdPartner.getPartnerId().value();
 
-        final var input = new GetPartnerByIdUseCase.Input(createdPartner.getPartnerId().value().toString());
+        final var input = new GetPartnerByIdUseCase.Input(createdPartner.getPartnerId().value());
 
         final var useCase = new GetPartnerByIdUseCase(partnerRepository);
         final var output = useCase.execute(input).get();

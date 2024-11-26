@@ -1,47 +1,46 @@
 package com.example.demo.application.usecases;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import com.example.demo.application.UseCase;
+import com.example.demo.application.entities.Event;
+import com.example.demo.application.entities.PartnerId;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.Event;
-import com.example.demo.infrastructure.services.EventService;
-import com.example.demo.infrastructure.services.PartnerService;
+import com.example.demo.application.repositories.EventRepository;
+import com.example.demo.application.repositories.PartnerRepository;
 
 public class CreateEventUseCase extends UseCase<CreateEventUseCase.Input, CreateEventUseCase.Output> {
 
-    private final PartnerService partnerService;
-    private final EventService eventService;
+    private final PartnerRepository partnerRepository;
+    private final EventRepository eventRepository;
 
-    public CreateEventUseCase(final PartnerService partnerService, final EventService eventService) {
-        this.eventService = Objects.requireNonNull(eventService);
-        this.partnerService = Objects.requireNonNull(partnerService);
+    public CreateEventUseCase(final PartnerRepository partnerRepository, final EventRepository eventRepository) {
+        this.eventRepository = Objects.requireNonNull(eventRepository);
+        this.partnerRepository = Objects.requireNonNull(partnerRepository);
     }
 
     @Override
     public Output execute(final Input input) {
-        var event = new Event();
-        event.setDate(LocalDate.parse(input.date, DateTimeFormatter.ISO_DATE));
-        event.setName(input.name);
-        event.setTotalSpots(input.totalSpots);
 
-        partnerService.findById(input.partnerId)
-                .ifPresentOrElse(event::setPartner, () -> {
-                    throw new ValidationException("Partner not found");
-                });
+        final var partner = partnerRepository.partnerOfId(PartnerId.with(input.partnerId))
+                .orElseThrow(() -> new ValidationException("Partner not found"));
 
-        event = eventService.save(event);
+        final var event = eventRepository.create(Event.newEvent(input.name, input.date, input.totalSpots, partner));
 
-        return new Output(event.getId(), input.date, event.getName(), input.totalSpots, input.partnerId);
+        return new Output(
+                event.getEventId().value(),
+                input.date,
+                event.getName().value(),
+                event.getTotalSpots(),
+                event.getPartnerId().value()
+        );
     }
 
-    public record Input(String date, String name, Integer totalSpots, Long partnerId) {
+    public record Input(String date, String name, Integer totalSpots, String partnerId) {
 
     }
 
-    public record Output(Long id, String date, String name, int totalSpots, Long partnerId) {
+    public record Output(String id, String date, String name, int totalSpots, String partnerId) {
 
     }
 }

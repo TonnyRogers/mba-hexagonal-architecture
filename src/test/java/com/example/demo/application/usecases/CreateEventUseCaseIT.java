@@ -38,7 +38,7 @@ public class CreateEventUseCaseIT extends IntegrationTest {
         final var date = "2024-01-01";
         final var name = "Tony Amaral";
         final var totalSpots = 10;
-        final var partnerId = partner.getId();
+        final var partnerId = partner.getId().toString();
 
         final var createInput = new CreateEventUseCase.Input(date, name, totalSpots, partnerId);
 
@@ -57,7 +57,7 @@ public class CreateEventUseCaseIT extends IntegrationTest {
         final var date = "2024-01-01";
         final var name = "Tony Amaral";
         final var totalSpots = 10;
-        final var partnerId = TSID.fast().toLong();
+        final var partnerId = TSID.fast().toString();
         final var createInput = new CreateEventUseCase.Input(date, name, totalSpots, partnerId);
         final var error = "Partner not found";
 

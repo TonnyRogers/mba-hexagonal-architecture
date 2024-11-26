@@ -22,7 +22,7 @@ public class GetCustomerByIdUseCaseTest {
 
         final var createdCustomer = Customer.newCustomer(name, CPF, email);
 
-        final var expectedId = createdCustomer.getCustomerId().value().toString();
+        final var expectedId = createdCustomer.getCustomerId().value();
 
         final var input = new GetCustomerByIdUseCase.Input(expectedId);
         customerRepository.create(createdCustomer);

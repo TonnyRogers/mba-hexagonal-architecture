@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.example.demo.application.exceptions.ValidationException;
 
-public record PartnerId(UUID value) {
+public record PartnerId(String value) {
 
     public PartnerId {
         if (value == null) {
@@ -13,12 +13,12 @@ public record PartnerId(UUID value) {
     }
 
     public static PartnerId unique() {
-        return new PartnerId(UUID.randomUUID());
+        return new PartnerId(UUID.randomUUID().toString());
     }
 
     public static PartnerId with(final String value) {
         try {
-            return new PartnerId(UUID.fromString(value));
+            return new PartnerId(UUID.fromString(value).toString());
         } catch (IllegalArgumentException ex) {
             throw new ValidationException("Invalid value for PartnerId");
         }
