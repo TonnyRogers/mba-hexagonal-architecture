@@ -3,7 +3,7 @@ package com.example.demo.application.usecases;
 import java.util.Objects;
 
 import com.example.demo.application.UseCase;
-import com.example.demo.application.entities.Customer;
+import com.example.demo.application.domain.Customer;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.repositories.CustomerRepository;
 

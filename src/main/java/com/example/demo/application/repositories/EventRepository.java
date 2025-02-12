@@ -2,8 +2,8 @@ package com.example.demo.application.repositories;
 
 import java.util.Optional;
 
-import com.example.demo.application.entities.Event;
-import com.example.demo.application.entities.EventId;
+import com.example.demo.application.domain.Event;
+import com.example.demo.application.domain.EventId;
 
 public interface EventRepository {
 

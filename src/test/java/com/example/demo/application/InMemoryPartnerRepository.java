@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.example.demo.application.entities.Partner;
-import com.example.demo.application.entities.PartnerId;
+import com.example.demo.application.domain.Partner;
+import com.example.demo.application.domain.PartnerId;
 import com.example.demo.application.repositories.PartnerRepository;
 
 public class InMemoryPartnerRepository implements PartnerRepository {
@@ -23,7 +23,7 @@ public class InMemoryPartnerRepository implements PartnerRepository {
 
     @Override
     public Optional<Partner> partnerOfId(PartnerId id) {
-        return Optional.ofNullable(this.partners.get(Objects.requireNonNull(id).value().toString()));
+        return Optional.ofNullable(this.partners.get(Objects.requireNonNull(id).value()));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class InMemoryPartnerRepository implements PartnerRepository {
 
     @Override
     public Partner create(Partner partner) {
-        this.partners.put(partner.getPartnerId().value().toString(), partner);
+        this.partners.put(partner.getPartnerId().value(), partner);
         this.partnersByCNPJ.put(partner.getCnpj().value(), partner);
         this.partnersByEmail.put(partner.getEmail().value(), partner);
         return partner;
@@ -46,7 +46,7 @@ public class InMemoryPartnerRepository implements PartnerRepository {
 
     @Override
     public Partner update(Partner partner) {
-        this.partners.put(partner.getPartnerId().value().toString(), partner);
+        this.partners.put(partner.getPartnerId().value(), partner);
         this.partnersByCNPJ.put(partner.getCnpj().value(), partner);
         this.partnersByEmail.put(partner.getEmail().value(), partner);
         return partner;

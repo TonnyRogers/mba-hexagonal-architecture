@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.example.demo.application.InMemoryPartnerRepository;
-import com.example.demo.application.entities.Partner;
+import com.example.demo.application.domain.Partner;
 import com.example.demo.application.exceptions.ValidationException;
 
 public class CreatePartnerUseCaseTest {

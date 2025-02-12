@@ -1,4 +1,4 @@
-package com.example.demo.application.entities;
+package com.example.demo.application.domain;
 
 import com.example.demo.application.exceptions.ValidationException;
 
@@ -20,9 +20,9 @@ public class Customer {
         }
 
         this.customerId = customerId;
-        this.name = new Name(name);
-        this.cpf = new Cpf(cpf);
-        this.email = new Email(email);
+        this.setName(name);
+        this.setCpf(cpf);
+        this.setEmail(email);
     }
 
     public static Customer newCustomer(String name, String cpf, String email) {
@@ -43,6 +43,18 @@ public class Customer {
 
     public Email getEmail() {
         return email;
+    }
+
+    private void setCpf(final String cpf) {
+        this.cpf = new Cpf(cpf);
+    }
+
+    private void setName(String name) {
+        this.name = new Name(name);
+    }
+
+    private void setEmail(String email) {
+        this.email = new Email(email);
     }
 
 }

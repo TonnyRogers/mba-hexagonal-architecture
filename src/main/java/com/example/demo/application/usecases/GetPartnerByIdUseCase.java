@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.example.demo.application.UseCase;
-import com.example.demo.application.entities.PartnerId;
+import com.example.demo.application.domain.PartnerId;
 import com.example.demo.application.repositories.PartnerRepository;
 
 public class GetPartnerByIdUseCase extends UseCase<GetPartnerByIdUseCase.Input, Optional<GetPartnerByIdUseCase.Output>> {

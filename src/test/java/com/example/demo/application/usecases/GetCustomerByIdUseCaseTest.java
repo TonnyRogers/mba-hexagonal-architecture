@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.example.demo.application.InMemoryCustomerRepository;
-import com.example.demo.application.entities.Customer;
+import com.example.demo.application.domain.Customer;
 
 public class GetCustomerByIdUseCaseTest {
 

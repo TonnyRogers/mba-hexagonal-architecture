@@ -1,4 +1,4 @@
-package com.example.demo.application.entities;
+package com.example.demo.application.domain;
 
 import com.example.demo.application.exceptions.ValidationException;
 

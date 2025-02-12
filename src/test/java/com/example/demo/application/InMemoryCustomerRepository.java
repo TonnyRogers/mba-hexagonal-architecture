@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.example.demo.application.entities.Customer;
-import com.example.demo.application.entities.CustomerId;
+import com.example.demo.application.domain.Customer;
+import com.example.demo.application.domain.CustomerId;
 import com.example.demo.application.repositories.CustomerRepository;
 
 public class InMemoryCustomerRepository implements CustomerRepository {

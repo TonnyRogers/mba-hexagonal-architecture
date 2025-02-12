@@ -3,8 +3,8 @@ package com.example.demo.application.usecases;
 import java.util.Objects;
 
 import com.example.demo.application.UseCase;
-import com.example.demo.application.entities.Event;
-import com.example.demo.application.entities.PartnerId;
+import com.example.demo.application.domain.Event;
+import com.example.demo.application.domain.PartnerId;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.repositories.EventRepository;
 import com.example.demo.application.repositories.PartnerRepository;

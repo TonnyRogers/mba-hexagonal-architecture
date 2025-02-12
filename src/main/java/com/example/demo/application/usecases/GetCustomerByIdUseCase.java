@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.example.demo.application.UseCase;
-import com.example.demo.application.entities.CustomerId;
+import com.example.demo.application.domain.CustomerId;
 import com.example.demo.application.repositories.CustomerRepository;
 
 public class GetCustomerByIdUseCase extends UseCase<GetCustomerByIdUseCase.Input, Optional<GetCustomerByIdUseCase.Output>> {

@@ -1,4 +1,4 @@
-package com.example.demo.application.entities;
+package com.example.demo.application.domain;
 
 import com.example.demo.application.exceptions.ValidationException;
 
@@ -16,9 +16,9 @@ public class Partner {
         }
 
         this.partnerId = partnerId;
-        this.name = new Name(name);
-        this.cnpj = new Cnpj(cnpj);
-        this.email = new Email(email);
+        this.setCnpj(cnpj);
+        this.setEmail(email);
+        this.setName(name);
     }
 
     public static Partner newPartner(String name, String cnpj, String email) {
@@ -39,6 +39,18 @@ public class Partner {
 
     public Email getEmail() {
         return email;
+    }
+
+    private void setName(final String name) {
+        this.name = new Name(name);
+    }
+
+    private void setCnpj(final String cnpj) {
+        this.cnpj = new Cnpj(cnpj);
+    }
+
+    private void setEmail(final String email) {
+        this.email = new Email(email);
     }
 
 }

@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.example.demo.application.entities.Event;
-import com.example.demo.application.entities.EventId;
+import com.example.demo.application.domain.Event;
+import com.example.demo.application.domain.EventId;
 import com.example.demo.application.repositories.EventRepository;
 
 public class InMemoryEventRepository implements EventRepository {
