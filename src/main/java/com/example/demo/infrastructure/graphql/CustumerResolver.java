@@ -7,8 +7,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.example.demo.application.usecases.CreateCustomerUseCase;
-import com.example.demo.application.usecases.GetCustomerByIdUseCase;
+import com.example.demo.application.usecases.customer.CreateCustomerUseCase;
+import com.example.demo.application.usecases.customer.GetCustomerByIdUseCase;
 import com.example.demo.infrastructure.dtos.NewCustomerDTO;
 
 @Controller

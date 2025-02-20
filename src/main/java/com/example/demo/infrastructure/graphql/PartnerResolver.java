@@ -7,8 +7,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.example.demo.application.usecases.CreatePartnerUseCase;
-import com.example.demo.application.usecases.GetPartnerByIdUseCase;
+import com.example.demo.application.usecases.partner.CreatePartnerUseCase;
+import com.example.demo.application.usecases.partner.GetPartnerByIdUseCase;
 import com.example.demo.infrastructure.dtos.NewPartnerDTO;
 
 @Controller

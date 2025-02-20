@@ -7,8 +7,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.application.usecases.CreateEventUseCase;
-import com.example.demo.application.usecases.SubscribeCustomerToEventUseCase;
+import com.example.demo.application.usecases.event.CreateEventUseCase;
+import com.example.demo.application.usecases.event.SubscribeCustomerToEventUseCase;
 import com.example.demo.infrastructure.dtos.NewEventDTO;
 import com.example.demo.infrastructure.dtos.SubscribeDTO;
 

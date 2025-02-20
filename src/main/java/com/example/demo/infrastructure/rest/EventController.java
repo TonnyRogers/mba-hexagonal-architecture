@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.application.usecases.CreateEventUseCase;
-import com.example.demo.application.usecases.SubscribeCustomerToEventUseCase;
+import com.example.demo.application.usecases.event.CreateEventUseCase;
+import com.example.demo.application.usecases.event.SubscribeCustomerToEventUseCase;
 import com.example.demo.infrastructure.dtos.NewEventDTO;
 import com.example.demo.infrastructure.dtos.SubscribeDTO;
 

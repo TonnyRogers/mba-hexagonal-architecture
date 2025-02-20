@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.demo.application.usecases.CreateCustomerUseCase;
+import com.example.demo.application.usecases.customer.CreateCustomerUseCase;
 import com.example.demo.infrastructure.dtos.NewCustomerDTO;
 import com.example.demo.infrastructure.repositories.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

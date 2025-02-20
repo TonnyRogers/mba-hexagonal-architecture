@@ -2,8 +2,8 @@ package com.example.demo.application.repositories;
 
 import java.util.Optional;
 
-import com.example.demo.application.domain.Partner;
-import com.example.demo.application.domain.PartnerId;
+import com.example.demo.application.domain.partner.Partner;
+import com.example.demo.application.domain.partner.PartnerId;
 
 public interface PartnerRepository {
 

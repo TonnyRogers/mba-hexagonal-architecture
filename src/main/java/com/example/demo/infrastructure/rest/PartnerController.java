@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.application.usecases.CreatePartnerUseCase;
-import com.example.demo.application.usecases.GetPartnerByIdUseCase;
+import com.example.demo.application.usecases.partner.CreatePartnerUseCase;
+import com.example.demo.application.usecases.partner.GetPartnerByIdUseCase;
 import com.example.demo.infrastructure.dtos.NewPartnerDTO;
 
 @RestController

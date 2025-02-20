@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.application.usecases.CreateEventUseCase;
+import com.example.demo.application.usecases.event.CreateEventUseCase;
 import com.example.demo.infrastructure.dtos.NewEventDTO;
 import com.example.demo.infrastructure.dtos.SubscribeDTO;
 import com.example.demo.infrastructure.models.Customer;

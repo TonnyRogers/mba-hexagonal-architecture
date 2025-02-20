@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.demo.application.usecases.CreatePartnerUseCase;
+import com.example.demo.application.usecases.partner.CreatePartnerUseCase;
 import com.example.demo.infrastructure.dtos.NewPartnerDTO;
 import com.example.demo.infrastructure.repositories.PartnerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

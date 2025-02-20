@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.application.usecases.CreateCustomerUseCase;
-import com.example.demo.application.usecases.GetCustomerByIdUseCase;
+import com.example.demo.application.usecases.customer.CreateCustomerUseCase;
+import com.example.demo.application.usecases.customer.GetCustomerByIdUseCase;
 import com.example.demo.infrastructure.dtos.NewCustomerDTO;
 
 @RestController

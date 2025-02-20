@@ -5,12 +5,12 @@ import java.util.Objects;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.demo.application.usecases.CreateCustomerUseCase;
-import com.example.demo.application.usecases.CreateEventUseCase;
-import com.example.demo.application.usecases.CreatePartnerUseCase;
-import com.example.demo.application.usecases.GetCustomerByIdUseCase;
-import com.example.demo.application.usecases.GetPartnerByIdUseCase;
-import com.example.demo.application.usecases.SubscribeCustomerToEventUseCase;
+import com.example.demo.application.usecases.customer.CreateCustomerUseCase;
+import com.example.demo.application.usecases.customer.GetCustomerByIdUseCase;
+import com.example.demo.application.usecases.event.CreateEventUseCase;
+import com.example.demo.application.usecases.event.SubscribeCustomerToEventUseCase;
+import com.example.demo.application.usecases.partner.CreatePartnerUseCase;
+import com.example.demo.application.usecases.partner.GetPartnerByIdUseCase;
 import com.example.demo.infrastructure.services.CustomerService;
 import com.example.demo.infrastructure.services.EventService;
 import com.example.demo.infrastructure.services.PartnerService;

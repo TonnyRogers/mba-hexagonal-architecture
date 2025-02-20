@@ -2,8 +2,8 @@ package com.example.demo.application.repositories;
 
 import java.util.Optional;
 
-import com.example.demo.application.domain.Customer;
-import com.example.demo.application.domain.CustomerId;
+import com.example.demo.application.domain.customer.Customer;
+import com.example.demo.application.domain.customer.CustomerId;
 
 public interface CustomerRepository {
 
