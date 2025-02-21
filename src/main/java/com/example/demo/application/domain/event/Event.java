@@ -124,4 +124,22 @@ public class Event {
         this.partnerId = partnerId;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Event event = (Event) obj;
+
+        return Objects.equals(eventId, event.eventId);
+    }
+
 }

@@ -2,7 +2,7 @@ package com.example.demo.infrastructure.dtos;
 
 import java.time.format.DateTimeFormatter;
 
-import com.example.demo.infrastructure.models.Event;
+import com.example.demo.infrastructure.jpa.models.EventEntity;
 
 public class EventDTO {
 
@@ -15,7 +15,7 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(Event event) {
+    public EventDTO(EventEntity event) {
         this.id = event.getId();
         this.name = event.getName();
         this.date = event.getDate().format(DateTimeFormatter.ISO_DATE);

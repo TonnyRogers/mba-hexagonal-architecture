@@ -3,6 +3,8 @@ package com.example.demo.application.usecases.partner;
 import java.util.Objects;
 
 import com.example.demo.application.domain.partner.Partner;
+import com.example.demo.application.domain.person.Cnpj;
+import com.example.demo.application.domain.person.Email;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.repositories.PartnerRepository;
 import com.example.demo.application.usecases.UseCase;
@@ -17,7 +19,7 @@ public class CreatePartnerUseCase extends UseCase<CreatePartnerUseCase.Input, Cr
 
     @Override
     public Output execute(final Input input) {
-        if (partnerRepository.partnerOfCNPJ(input.cpnj).isPresent() || partnerRepository.partnerOfEmail(input.email).isPresent()) {
+        if (partnerRepository.partnerOfCNPJ(new Cnpj(input.cpnj)).isPresent() || partnerRepository.partnerOfEmail(new Email(input.email)).isPresent()) {
             throw new ValidationException("Partner already exists");
         }
 

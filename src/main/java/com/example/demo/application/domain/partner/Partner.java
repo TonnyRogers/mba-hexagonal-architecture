@@ -1,5 +1,7 @@
 package com.example.demo.application.domain.partner;
 
+import java.util.Objects;
+
 import com.example.demo.application.domain.person.Cnpj;
 import com.example.demo.application.domain.person.Email;
 import com.example.demo.application.domain.person.Name;
@@ -54,6 +56,24 @@ public class Partner {
 
     private void setEmail(final String email) {
         this.email = new Email(email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(partnerId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Partner partner = (Partner) obj;
+
+        return Objects.equals(partnerId, partner.partnerId);
     }
 
 }

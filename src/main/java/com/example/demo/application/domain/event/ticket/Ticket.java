@@ -1,11 +1,11 @@
 package com.example.demo.application.domain.event.ticket;
 
 import java.time.Instant;
+import java.util.Objects;
 
 import com.example.demo.application.domain.customer.CustomerId;
 import com.example.demo.application.domain.event.EventId;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.TicketStatus;
 
 public class Ticket {
 
@@ -89,6 +89,24 @@ public class Ticket {
             throw new ValidationException("Invalid reservedAt for Ticket");
         }
         this.reservedAt = reservedAt;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Ticket ticket = (Ticket) obj;
+
+        return Objects.equals(ticketId, ticket.ticketId);
     }
 
 }

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.IntegrationTest;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.Customer;
-import com.example.demo.infrastructure.repositories.CustomerRepository;
+import com.example.demo.infrastructure.jpa.models.CustomerEntity;
+import com.example.demo.infrastructure.jpa.repositories.CustomerJpaRepository;
 
 public class CreateCustomerUseCaseIT extends IntegrationTest {
 
@@ -17,7 +17,7 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
     private CreateCustomerUseCase useCase;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
 
     @AfterEach
     void tearDown() {
@@ -84,8 +84,8 @@ public class CreateCustomerUseCaseIT extends IntegrationTest {
         Assertions.assertEquals(errorMessage, actualException.getMessage());
     }
 
-    private Customer createCustomer(final String cpf, final String email, final String name) {
-        final var createdCustomer = new Customer();
+    private CustomerEntity createCustomer(final String cpf, final String email, final String name) {
+        final var createdCustomer = new CustomerEntity();
         createdCustomer.setCpf(cpf);
         createdCustomer.setName(name);
         createdCustomer.setEmail(email);

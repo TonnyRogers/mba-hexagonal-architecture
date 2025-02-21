@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.IntegrationTest;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.models.Partner;
-import com.example.demo.infrastructure.repositories.EventRepository;
-import com.example.demo.infrastructure.repositories.PartnerRepository;
+import com.example.demo.infrastructure.jpa.models.PartnerEntity;
+import com.example.demo.infrastructure.jpa.repositories.EventJpaRepository;
+import com.example.demo.infrastructure.jpa.repositories.PartnerJpaRepository;
 
 import io.hypersistence.tsid.TSID;
 
@@ -20,10 +20,10 @@ public class CreateEventUseCaseIT extends IntegrationTest {
     private CreateEventUseCase useCase;
 
     @Autowired
-    private PartnerRepository partnerRepository;
+    private PartnerJpaRepository partnerRepository;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventJpaRepository eventRepository;
 
     @BeforeEach
     void tearDown() {
@@ -66,8 +66,8 @@ public class CreateEventUseCaseIT extends IntegrationTest {
         Assertions.assertEquals(error, exception.getMessage());
     }
 
-    private Partner createPartner(String CNPJ, String name, String email) {
-        final var createdPartner = new Partner();
+    private PartnerEntity createPartner(String CNPJ, String name, String email) {
+        final var createdPartner = new PartnerEntity();
         createdPartner.setCnpj(CNPJ);
         createdPartner.setName(name);
         createdPartner.setEmail(email);

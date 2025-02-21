@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import com.example.demo.application.domain.customer.Customer;
 import com.example.demo.application.domain.event.Event;
 import com.example.demo.application.domain.event.EventId;
+import com.example.demo.application.domain.event.ticket.TicketStatus;
 import com.example.demo.application.domain.partner.Partner;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.repository.InMemoryCustomerRepository;
 import com.example.demo.application.repository.InMemoryEventRepository;
 import com.example.demo.application.repository.InMemoryTicketRepository;
-import com.example.demo.infrastructure.models.TicketStatus;
 
 public class SubscribeCustomerToEventUseCaseTest {
 

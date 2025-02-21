@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.infrastructure.models.Event;
-import com.example.demo.infrastructure.models.Ticket;
-import com.example.demo.infrastructure.repositories.EventRepository;
-import com.example.demo.infrastructure.repositories.TicketRepository;
+import com.example.demo.infrastructure.jpa.models.EventEntity;
+import com.example.demo.infrastructure.jpa.repositories.EventJpaRepository;
+import com.example.demo.infrastructure.jpa.repositories.TicketJpaRepository;
 
 @Service
 public class EventService {
@@ -18,21 +17,21 @@ public class EventService {
     private CustomerService customerService;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventJpaRepository eventRepository;
 
     @Autowired
-    private TicketRepository ticketRepository;
+    private TicketJpaRepository ticketRepository;
 
     @Transactional
-    public Event save(Event event) {
+    public EventEntity save(EventEntity event) {
         return eventRepository.save(event);
     }
 
-    public Optional<Event> findById(Long id) {
+    public Optional<EventEntity> findById(Long id) {
         return eventRepository.findById(id);
     }
 
-    public Optional<Ticket> findTicketByEventIdAndCustomerId(Long id, Long customerId) {
-        return ticketRepository.findByEventIdAndCustomerId(id, customerId);
-    }
+    // public Optional<TicketEntity> findTicketByEventIdAndCustomerId(UUID id, UUID customerId) {
+    //     return ticketRepository.findByEventIdAndCustomerId(id, customerId);
+    // }
 }

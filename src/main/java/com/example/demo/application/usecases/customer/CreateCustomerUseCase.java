@@ -3,6 +3,8 @@ package com.example.demo.application.usecases.customer;
 import java.util.Objects;
 
 import com.example.demo.application.domain.customer.Customer;
+import com.example.demo.application.domain.person.Cpf;
+import com.example.demo.application.domain.person.Email;
 import com.example.demo.application.exceptions.ValidationException;
 import com.example.demo.application.repositories.CustomerRepository;
 import com.example.demo.application.usecases.UseCase;
@@ -17,7 +19,8 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, 
 
     @Override
     public Output execute(Input input) {
-        if (customerRepository.customerOfCPF(input.cpf).isPresent() || customerRepository.customerOfEmail(input.email).isPresent()) {
+        if (customerRepository.customerOfCPF(new Cpf(input.cpf)).isPresent()
+                || customerRepository.customerOfEmail(new Email(input.email)).isPresent()) {
             throw new ValidationException("Customer already exists");
         }
 

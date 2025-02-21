@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.example.demo.application.usecases.customer.CreateCustomerUseCase;
 import com.example.demo.infrastructure.dtos.NewCustomerDTO;
-import com.example.demo.infrastructure.repositories.CustomerRepository;
+import com.example.demo.infrastructure.jpa.repositories.CustomerJpaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ActiveProfiles("test")
@@ -30,7 +30,7 @@ public class CustomerControllerTest {
     private ObjectMapper mapper;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
 
     @AfterEach
     void tearDown() {

@@ -4,14 +4,16 @@ import java.util.Optional;
 
 import com.example.demo.application.domain.customer.Customer;
 import com.example.demo.application.domain.customer.CustomerId;
+import com.example.demo.application.domain.person.Cpf;
+import com.example.demo.application.domain.person.Email;
 
 public interface CustomerRepository {
 
     Optional<Customer> customerOfId(CustomerId id);
 
-    Optional<Customer> customerOfCPF(String CPF);
+    Optional<Customer> customerOfCPF(Cpf CPF);
 
-    Optional<Customer> customerOfEmail(String Email);
+    Optional<Customer> customerOfEmail(Email Email);
 
     Customer create(Customer customer);
 

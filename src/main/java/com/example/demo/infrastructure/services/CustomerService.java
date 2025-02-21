@@ -1,34 +1,35 @@
 package com.example.demo.infrastructure.services;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.infrastructure.models.Customer;
-import com.example.demo.infrastructure.repositories.CustomerRepository;
+import com.example.demo.infrastructure.jpa.models.CustomerEntity;
+import com.example.demo.infrastructure.jpa.repositories.CustomerJpaRepository;
 
 @Service
 public class CustomerService {
 
     @Autowired
-    private CustomerRepository repository;
+    private CustomerJpaRepository repository;
 
     @Transactional
-    public Customer save(Customer customer) {
+    public CustomerEntity save(CustomerEntity customer) {
         return repository.save(customer);
     }
 
-    public Optional<Customer> findById(Long id) {
+    public Optional<CustomerEntity> findById(UUID id) {
         return repository.findById(id);
     }
 
-    public Optional<Customer> findByCpf(String cpf) {
+    public Optional<CustomerEntity> findByCpf(String cpf) {
         return repository.findByCpf(cpf);
     }
 
-    public Optional<Customer> findByEmail(String email) {
+    public Optional<CustomerEntity> findByEmail(String email) {
         return repository.findByEmail(email);
     }
 

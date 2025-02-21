@@ -18,11 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.application.usecases.event.CreateEventUseCase;
 import com.example.demo.infrastructure.dtos.NewEventDTO;
 import com.example.demo.infrastructure.dtos.SubscribeDTO;
-import com.example.demo.infrastructure.models.Customer;
-import com.example.demo.infrastructure.models.Partner;
-import com.example.demo.infrastructure.repositories.CustomerRepository;
-import com.example.demo.infrastructure.repositories.EventRepository;
-import com.example.demo.infrastructure.repositories.PartnerRepository;
+import com.example.demo.infrastructure.jpa.models.CustomerEntity;
+import com.example.demo.infrastructure.jpa.models.PartnerEntity;
+import com.example.demo.infrastructure.jpa.repositories.CustomerJpaRepository;
+import com.example.demo.infrastructure.jpa.repositories.EventJpaRepository;
+import com.example.demo.infrastructure.jpa.repositories.PartnerJpaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ActiveProfiles("test")
@@ -37,21 +37,21 @@ class EventControllerTest {
     private ObjectMapper mapper;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
 
     @Autowired
-    private PartnerRepository partnerRepository;
+    private PartnerJpaRepository partnerRepository;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventJpaRepository eventRepository;
 
-    private Customer johnDoe;
-    private Partner disney;
+    private CustomerEntity johnDoe;
+    private PartnerEntity disney;
 
     @BeforeEach
     void setUp() {
-        johnDoe = customerRepository.save(new Customer(null, "John Doe", "123", "john@gmail.com"));
-        disney = partnerRepository.save(new Partner(null, "Disney", "456", "disney@gmail.com"));
+        johnDoe = customerRepository.save(new CustomerEntity(null, "John Doe", "123", "john@gmail.com"));
+        disney = partnerRepository.save(new PartnerEntity(null, "Disney", "456", "disney@gmail.com"));
     }
 
     @AfterEach

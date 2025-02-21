@@ -1,5 +1,7 @@
 package com.example.demo.application.domain.customer;
 
+import java.util.Objects;
+
 import com.example.demo.application.domain.person.Cpf;
 import com.example.demo.application.domain.person.Email;
 import com.example.demo.application.domain.person.Name;
@@ -58,6 +60,24 @@ public class Customer {
 
     private void setEmail(String email) {
         this.email = new Email(email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Customer customer = (Customer) obj;
+
+        return Objects.equals(customerId, customer.customerId);
     }
 
 }
