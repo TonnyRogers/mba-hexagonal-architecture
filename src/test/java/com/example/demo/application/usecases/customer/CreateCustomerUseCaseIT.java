@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.IntegrationTest;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.jpa.models.CustomerEntity;
+import com.example.demo.infrastructure.jpa.entities.CustomerEntity;
 import com.example.demo.infrastructure.jpa.repositories.CustomerJpaRepository;
 
 public class CreateCustomerUseCaseIT extends IntegrationTest {

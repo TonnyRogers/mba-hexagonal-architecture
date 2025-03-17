@@ -2,7 +2,7 @@ package com.example.demo.infrastructure.dtos;
 
 import java.time.format.DateTimeFormatter;
 
-import com.example.demo.infrastructure.jpa.models.EventEntity;
+import com.example.demo.infrastructure.jpa.entities.EventEntity;
 
 public class EventDTO {
 

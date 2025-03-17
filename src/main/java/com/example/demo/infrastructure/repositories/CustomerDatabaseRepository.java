@@ -12,7 +12,7 @@ import com.example.demo.application.domain.customer.CustomerId;
 import com.example.demo.application.domain.person.Cpf;
 import com.example.demo.application.domain.person.Email;
 import com.example.demo.application.repositories.CustomerRepository;
-import com.example.demo.infrastructure.jpa.models.CustomerEntity;
+import com.example.demo.infrastructure.jpa.entities.CustomerEntity;
 import com.example.demo.infrastructure.jpa.repositories.CustomerJpaRepository;
 
 // interface adapter

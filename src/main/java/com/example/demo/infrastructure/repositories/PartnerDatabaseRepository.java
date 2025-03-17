@@ -12,7 +12,7 @@ import com.example.demo.application.domain.partner.PartnerId;
 import com.example.demo.application.domain.person.Cnpj;
 import com.example.demo.application.domain.person.Email;
 import com.example.demo.application.repositories.PartnerRepository;
-import com.example.demo.infrastructure.jpa.models.PartnerEntity;
+import com.example.demo.infrastructure.jpa.entities.PartnerEntity;
 import com.example.demo.infrastructure.jpa.repositories.PartnerJpaRepository;
 
 // interface adapter

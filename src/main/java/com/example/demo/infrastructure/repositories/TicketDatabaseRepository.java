@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.application.domain.event.ticket.Ticket;
 import com.example.demo.application.domain.event.ticket.TicketId;
 import com.example.demo.application.repositories.TicketRepository;
-import com.example.demo.infrastructure.jpa.models.TicketEntity;
+import com.example.demo.infrastructure.jpa.entities.TicketEntity;
 import com.example.demo.infrastructure.jpa.repositories.TicketJpaRepository;
 
 // interface adapter

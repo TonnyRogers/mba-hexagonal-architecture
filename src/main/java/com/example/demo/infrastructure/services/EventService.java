@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.infrastructure.jpa.models.EventEntity;
+import com.example.demo.infrastructure.jpa.entities.EventEntity;
 import com.example.demo.infrastructure.jpa.repositories.EventJpaRepository;
 import com.example.demo.infrastructure.jpa.repositories.TicketJpaRepository;
 

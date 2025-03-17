@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.IntegrationTest;
 import com.example.demo.application.exceptions.ValidationException;
-import com.example.demo.infrastructure.jpa.models.PartnerEntity;
+import com.example.demo.infrastructure.jpa.entities.PartnerEntity;
 import com.example.demo.infrastructure.jpa.repositories.EventJpaRepository;
 import com.example.demo.infrastructure.jpa.repositories.PartnerJpaRepository;
 

@@ -23,26 +23,37 @@ public class Event {
     private PartnerId partnerId;
     private Set<EventTicket> tickets;
 
-    public Event(EventId eventId, String name, String date, Integer totalSpots, PartnerId partnerId) {
+    public Event(
+            EventId eventId,
+            String name,
+            String date,
+            Integer totalSpots,
+            PartnerId partnerId,
+            Set<EventTicket> tickets
+    ) {
 
-        this(eventId);
+        this(eventId, tickets);
         this.setName(name);
         this.setDate(date);
         this.setTotalSpots(totalSpots);
         this.setPartnerId(partnerId);
     }
 
-    private Event(final EventId eventId) {
+    private Event(final EventId eventId, final Set<EventTicket> tickets) {
         if (eventId == null) {
             throw new ValidationException("Invalid eventId for Event");
         }
 
         this.eventId = eventId;
-        this.tickets = new HashSet<>(0);
+        this.tickets = tickets != null ? tickets : new HashSet<>(0);
     }
 
-    public static Event newEvent(final String name, final String date, final Integer totalSpots, final Partner partner) {
-        return new Event(EventId.unique(), name, date, totalSpots, partner.getPartnerId());
+    public static Event newEvent(
+            final String name,
+            final String date,
+            final Integer totalSpots,
+            final Partner partner) {
+        return new Event(EventId.unique(), name, date, totalSpots, partner.getPartnerId(), null);
     }
 
     public Ticket reserveTicket(final CustomerId customerId) {
@@ -140,6 +151,24 @@ public class Event {
         Event event = (Event) obj;
 
         return Objects.equals(eventId, event.eventId);
+    }
+
+    public static Event restore(
+            final String id,
+            final String name,
+            final String date,
+            final int totalSpots,
+            final String partner,
+            final Set<EventTicket> tickets
+    ) {
+        return new Event(
+                EventId.with(id),
+                name,
+                date,
+                totalSpots,
+                PartnerId.with(partner),
+                tickets
+        );
     }
 
 }

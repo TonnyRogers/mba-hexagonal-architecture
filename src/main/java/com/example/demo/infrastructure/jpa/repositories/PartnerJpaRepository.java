@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.demo.infrastructure.jpa.models.PartnerEntity;
+import com.example.demo.infrastructure.jpa.entities.PartnerEntity;
 
 public interface PartnerJpaRepository extends CrudRepository<PartnerEntity, UUID> {
 
